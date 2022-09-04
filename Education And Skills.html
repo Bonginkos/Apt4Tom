@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*Strip the ul of padding and list styling*/
+ul {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  position: absolute;
+}
+
+/*Create a horizontal list with spacing*/
+li {
+  display:inline-block;
+  float: left;
+  margin-right: 1px;
+}
+
+/*Style for menu links*/
+li a {
+  display:block;
+  min-width:140px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #fff;
+  background: coral;
+  text-decoration: none;
+}
+
+/*Hover state for top level links*/
+li:hover a {
+  background: #19c589;
+}
+
+/*Style for dropdown links*/
+li:hover ul a {
+  background: #dddddd;
+  color: #2f3036;
+  height: 40px;
+  line-height: 40px;
+}
+
+/*Hover state for dropdown links*/
+li:hover ul a:hover {
+  background: #19c589;
+  color: #fff;
+}
+
+/*Hide dropdown links until they are needed*/
+li ul {
+  display: none;
+}
+
+/*Make dropdown links vertical*/
+li ul li {
+  display: block;
+  float: none;
+}
+
+/*Prevent text wrapping*/
+li ul li a {
+  width: auto;
+  min-width: 100px;
+  padding: 0 20px;
+}
+
+/*Display the dropdown on hover*/
+ul li a:hover + .hidden, .hidden:hover {
+  display: block;
+}
+
+/*Style 'show menu' label button and hide it by default*/
+.show-menu {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  color: #fff;
+  background: #19c589;
+  text-align: center;
+  padding: 10px 0;
+  display: none;
+}
+
+/*Hide checkbox*/
+input[type=checkbox]{
+    display: none;
+}
+
+/*Show menu when invisible checkbox is checked*/
+input[type=checkbox]:checked ~ #menu{
+    display: block;
+}
+
+
+/*Responsive Styles*/
+
+@media screen and (max-width : 760px){
+  /*Make dropdown links appear inline*/
+  ul {
+    position: static;
+    display: none;
+  }
+  /*Create vertical spacing*/
+  li {
+    margin-bottom: 1px;
+  }
+  /*Make all menu links full width*/
+  ul li, li a {
+    width: 100%;
+  }
+  /*Display 'show menu' link*/
+  .show-menu {
+    display:block;
+  }
+}
+
+/*
+!!!!
+This pen is being refactored
+!!!!
+*/
+
+/*
+=====
+DEPENDENCES
+=====
+*/
+
+.r-title{
+  margin-top: var(--rTitleMarginTop, 0) !important;
+  margin-bottom: var(--rTitleMarginBottom, 0) !important;
+}
+
+
+p:not([class]){
+  line-height: var(--cssTypographyLineHeight, 1.78);
+  margin-top: var(--cssTypographyBasicMargin, 1em);
+  margin-bottom: 0;
+}
+
+p:not([class]):first-child{
+  margin-top: 0;
+}
+
+/*
+text component
+*/
+
+.text{
+  display: var(--textDisplay, inline-flex);
+  font-size: var(--textFontSize, 1rem);  
+}
+
+/*
+time component
+*/
+
+/*
+core styles
+*/
+
+.time{
+  display: var(--timeDisplay, inline-flex);
+}
+
+/*
+extensions
+*/
+
+.time__month{
+  margin-left: var(--timelineMounthMarginLeft, .25em);
+}
+
+/*
+skin
+*/
+
+.time{
+  padding: var(--timePadding, .25rem 1.25rem .25rem);
+  background-color: var(--timeBackgroundColor, #f0f0f0);
+
+  font-size: var(--timeFontSize, .75rem);
+  font-weight: var(--timeFontWeight, 700);
+  text-transform: var(--timeTextTransform, uppercase);
+  color: var(--timeColor, currentColor);
+}
+
+/*
+card component
+*/
+
+/*
+core styles
+*/
+
+.card{
+  padding: var(--timelineCardPadding, 1.5rem 1.5rem 1.25rem);
+}
+
+.card__content{
+  margin-top: var(--cardContentMarginTop, .5rem);
+}
+
+/*
+skin
+*/
+
+.card{
+  border-radius: var(--timelineCardBorderRadius, 2px);
+  border-left: var(--timelineCardBorderLeftWidth, 3px) solid var(--timelineCardBorderLeftColor, var(--uiTimelineMainColor));
+  box-shadow: var(--timelineCardBoxShadow, 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24));
+  background-color: var(--timelineCardBackgroundColor, #fff);
+}
+
+/*
+extensions
+*/
+
+.card__title{
+  --rTitleMarginTop: var(--cardTitleMarginTop, 1rem);
+  font-size: var(--cardTitleFontSize, 1.25rem);
+}
+
+/*
+=====
+CORE STYLES
+=====
+*/
+
+.timeline{
+  display: var(--timelineDisplay, grid);
+  grid-row-gap: var(--timelineGroupsGap, 2rem);
+}
+
+/*
+1. If timeline__year isn't displaed the gap between it and timeline__cards isn't displayed too
+*/
+
+.timeline__year{
+  margin-bottom: 1.25rem; /* 1 */
+}
+
+.timeline__cards{
+  display: var(--timeloneCardsDisplay, grid);
+  grid-row-gap: var(--timeloneCardsGap, 1.5rem);
+}
+
+
+/*
+=====
+SKIN
+=====
+*/
+
+.timeline{
+  --uiTimelineMainColor: var(--timelineMainColor, #222);
+  --uiTimelineSecondaryColor: var(--timelineSecondaryColor, #fff);
+
+  border-left: var(--timelineLineWidth, 3px) solid var(--timelineLineBackgroundColor, var(--uiTimelineMainColor));
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+
+.timeline__year{
+  --timePadding: var(--timelineYearPadding, .5rem 1.5rem);
+  --timeColor: var(--uiTimelineSecondaryColor);
+  --timeBackgroundColor: var(--uiTimelineMainColor);
+  --timeFontWeight: var(--timelineYearFontWeight, 400);
+}
+
+.timeline__card{
+  position: relative;
+  margin-left: var(--timelineCardLineGap, 1rem);
+}
+
+/*
+1. Stoping cut box shadow
+*/
+
+.timeline__cards{
+  overflow: hidden;
+  padding-top: .25rem; /* 1 */
+  padding-bottom: .25rem; /* 1 */
+}
+
+.timeline__card::before{
+  content: "";
+  width: 100%;
+  height: var(--timelineCardLineWidth, 2px);
+  background-color: var(--timelineCardLineBackgroundColor, var(--uiTimelineMainColor));
+
+  position: absolute;
+  top: var(--timelineCardLineTop, 1rem);
+  left: -50%;
+  z-index: -1;
+}
+
+/*
+=====
+SETTINGS
+=====
+*/
+/**/
+.timeline{
+  --timelineMainColor: #4557bb;
+}
+
+/*
+=====
+DEMO
+=====
+*/
+
+body{
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
+  color: #222;
+
+  background-color: #f0f0f0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+p{
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+p:last-child{
+  margin-bottom: 0;
+}
+
+.page{
+  max-width: 47rem;
+  padding: 5rem 2rem 3rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.substack{
+  border:1px solid #EEE; 
+  background-color: #fff;
+  width: 100%;
+  max-width: 480px;
+  height: 280px;
+  margin: 1rem auto;;
+}
+
+
+.linktr{
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem;
+  text-align: center;
+}
+
+.linktr__goal{
+  background-color: rgb(209, 246, 255);
+  color: rgb(8, 49, 112);
+  box-shadow: rgb(8 49 112 / 24%) 0px 2px 8px 0px;
+  border-radius: 2rem;
+  padding: .75rem 1.5rem;
+}
+
+.r-link{
+    --uirLinkDisplay: var(--rLinkDisplay, inline-flex);
+    --uirLinkTextColor: var(--rLinkTextColor);
+    --uirLinkTextDecoration: var(--rLinkTextDecoration, none);
+
+    display: var(--uirLinkDisplay) !important;
+    color: var(--uirLinkTextColor) !important;
+    text-decoration: var(--uirLinkTextDecoration) !important;
+}
+
+.container {
+  width: 100%;
+  background-color: #ddd;
+}
+
+.skills {
+  text-align: right;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: white;
+}
+
+.html {width: 60%; background-color: orange;}
+.js {width: 50%; background-color: red;}
+
+
+    </style>
+</head>
+<body style="background-color:burlywood;">
+    <label for="show-menu" class="show-menu">Show Menu</label>
+  <input type="checkbox" id="show-menu" role="button">
+    <ul id="menu">
+    <li><a href="Home.html">Home</a></li>
+    <li>
+      <a href="About.html">About</a>
+      <ul class="hidden">
+      </ul>
+    </li>
+    <li>
+      <a href="Education And Skills.html">Education And Skills</a>
+      <ul class="hidden">
+      </ul>
+    </li>
+    <li><a href="Testimonial.html">Testimonial</a></li>
+    <li><a href="Contact Me.html">Contact</a></li>
+    <h3 style="text-align: center; color:white">My - Education - Timeline - And - skills</h3>
+
+</ul>
+<p>
+</div>
+
+<div class="page">
+  <div class="timeline">
+    <div class="timeline__group">
+      <span class="timeline__year time" aria-hidden="true">2013 - 2016</span>
+      <div class="timeline__cards">
+        <div class="timeline__card card">
+          <header class="card__header">
+            <time class="time" datetime="2008-02-02">
+              
+              <span class="time__month">Jan 2013 - Nov 2016 </span>
+            </time>
+          </header>
+          <div class="card__content">
+            <h3 class="card__title r-title">High School Attended</h3>
+            <p>Attending at Mosheh senior Secondary School doing the following Subjects:</p>
+            <p>Enlish</p>
+            <p>Isixhosa</p>
+            <p>Mathematics</p>
+            <p>Physical Science</p>
+            <p>Geography</p>
+            <p>Biology</p>
+    
+          </div>
+        </div>
+        <div class="timeline__card card">
+          <header class="card__header">
+            <time class="time" datetime="2008-09-01">
+              
+              <span class="time__month">Jan 2017 - Nov 2017</span>
+            </time>
+            <h4 class="card__title r-title">College Attended</h4>
+          </header>
+          <div class="card__content">
+            <p>In 2016  I registered Computer literacy as an Introduction course for a computer which took only three months course to be completed. There after that I decided to continued with another course which was called (ICDL) which is a course which took only one year to be completed the following modules are categorise for Computer literacy and (ICDL) which is a (International Computer Driving License).</p>
+            <p>Introduction Modules for computer literacy - Three Months Course are as follows:</p>
+            <p>MS Word</p>
+            <p>MS Excel</p>
+            <p>Ms powerpoint</p>
+            <p>Modueles For (ICDL) - Internatinal Computer Driving Licence - One Year Course are as follows:</p>
+            <p>MS Concerpts of IT</p>
+            <p>MS Word</p>
+            <p>MS Excel</p>
+            <p>MS PowerPoint</p>
+            <p>MS File Management</p>
+            <p>MS DataBase</p>
+            <p>Ms Internet</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline__group">
+      <span class="timeline__year time" aria-hidden="true">2017</span>
+      <div class="timeline__cards">
+        <div class="timeline__card card">
+          <header class="card__header">
+            <time class="time" datetime="2008-07-14">
+              
+              <span class="time__month">Feb 2019</span>
+            </time>
+          </header>
+          <div class="card__content">
+            <h5 class="card__title r-title">At Walter Sisulu University</h5>
+            <p>In 2019 I Registered at the university of Walter Sisulu as an IT student, for first year  I registered the following Modules:</p>
+            <p>Development Software I </p>
+            <p>System System I</p>
+            <p>Information System I</p>
+            <p>Information technology Skills I</p>
+            <p>For Second Year 2020 I registered the following modules:</p>
+            <p>Development Software II </p>
+            <p>Grafical user interface design I</p>
+            <p>Informat System II</p>
+            <p>Technical Programing II</p>
+            <p>For Third Year 2021 I registered the following modules:</p>
+            <p>Development Software III</p>
+            <p>Information System III</p>
+            <p>Technical Programing II</p>
+            <p>System Software I</p>
+            <p>Therafter I have been completed my deploma in 2021 , I decided to continued with my studies , I'm Currently doing an Advanced Diploma this year in 2022 as an extra additional qualifications of IT. I'm currently doing the following Modules:</p>
+            <p>Development Software IV</p>
+            <p>Software engeenering IV</p>
+            <p>Functional Management IV </p>
+            <p>Research Methodology IV</p>
+            <p>Application Technology IV</p>
+            <p>Information Technogy Management IV</p>
+            <p>Database Systems IV</p>
+            <p>Project IV</p>
+            
+            
+            
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline__group">
+      <span class="timeline__year time" aria-hidden="true">2019</span>
+      
+              
+          
+          </div>
+          
+        <section>
+        <h1 style="color: brown;">My Skills</h1>
+
+          <p>HTML</p>
+          <div class="container">
+            <div class="skills html">60%</div>
+          </div>
+          
+          
+          <p>Java</p>
+          <div class="container">
+          <div class="skills js">50%</div>
+          </div>
+          
+
+        </section>
+        
+      </div>
+      <footer style="text-align: center; color: #DA532B;">&copy;Bonginkosi Tom</footer>
+    </div>
+  </div>
+</div>
+
+ 
+</div>
+</p>
+
+  </ul> 
+  
+  </li>
+  
+</ul>
+</body>
+</html>
